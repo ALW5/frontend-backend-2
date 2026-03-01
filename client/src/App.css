@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.App {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.App-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+    padding: 40px 0;
+}
+
+.App-header h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.App-header p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* Форма добавления */
+.add-game-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.add-game-section h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.add-game-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.add-game-form input {
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.add-game-form input:focus {
+    outline: none;
+    border-color: #9b59b6;
+}
+
+.add-game-form button {
+    padding: 12px;
+    background: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-game-form button:hover {
+    background: #8e44ad;
+}
+
+/* Секция игр */
+.games-section {
+    margin-top: 40px;
+}
+
+.games-section h2 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.loading {
+    color: #3498db;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}

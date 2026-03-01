@@ -1,0 +1,302 @@
+// ========== ПЕРЕМЕННЫЕ (минимум 2) ==========
+$colors: (
+    'primary': #9b59b6,      // Фиолетовый - основной цвет магазина
+    'secondary': #3498db,     // Синий
+    'success': #2ecc71,       // Зеленый
+    'danger': #e74c3c,        // Красный
+    'warning': #f39c12,       // Оранжевый
+    'dark': #2c3e50,          // Темно-синий
+    'light': #ecf0f1,         // Светлый
+    'gray': #95a5a6           // Серый
+);
+
+$platform-colors: (
+    'pc': #3498db,
+    'ps': #003791,
+    'xbox': #107c10,
+    'switch': #e60012
+);
+
+$spacing: (
+    'xs': 4px,
+    'sm': 8px,
+    'md': 16px,
+    'lg': 24px,
+    'xl': 32px
+);
+
+$breakpoints: (
+    'mobile': 480px,
+    'tablet': 768px,
+    'desktop': 1024px
+);
+
+// ========== МИКСИНЫ (минимум 1) ==========
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin transition($property: all, $duration: 0.3s) {
+    transition: $property $duration ease;
+}
+
+@mixin badge($bg-color, $text-color: white) {
+    position: absolute;
+    top: map-get($spacing, 'sm');
+    left: map-get($spacing, 'sm');
+    background-color: $bg-color;
+    color: $text-color;
+    padding: map-get($spacing, 'xs') map-get($spacing, 'sm');
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@mixin platform-tag {
+    position: absolute;
+    bottom: map-get($spacing, 'sm');
+    right: map-get($spacing, 'sm');
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: map-get($spacing, 'xs') map-get($spacing, 'sm');
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+@mixin media($breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}
+
+// ========== ОСНОВНЫЕ СТИЛИ ==========
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: map-get($colors, 'dark');
+    padding: map-get($spacing, 'lg');
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+// ========== ШАПКА ==========
+.header {
+    text-align: center;
+    margin-bottom: map-get($spacing, 'xl');
+    
+    &__title {
+        font-size: 48px;
+        font-weight: 800;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-bottom: map-get($spacing, 'xs');
+        
+        @include media('tablet') {
+            font-size: 36px;
+        }
+    }
+    
+    &__subtitle {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 300;
+    }
+}
+
+// ========== СЕТКА ИГР ==========
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: map-get($spacing, 'lg');
+    
+    @include media('mobile') {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ========== КАРТОЧКА ИГРЫ ==========
+.game-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    @include transition(all);
+    position: relative;
+    
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    // Медиа-блок с изображением
+    &__media {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f0f0f0;
+    }
+    
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        @include transition(transform);
+        
+        .game-card:hover & {
+            transform: scale(1.05);
+        }
+    }
+    
+    &__badge {
+        @include badge(map-get($colors, 'primary'));
+    }
+    
+    &__platform {
+        @include platform-tag;
+    }
+    
+    // Контент карточки
+    &__content {
+        padding: map-get($spacing, 'lg');
+    }
+    
+    &__title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: map-get($spacing, 'xs');
+        color: map-get($colors, 'dark');
+    }
+    
+    &__meta {
+        @include flex-between;
+        margin-bottom: map-get($spacing, 'sm');
+    }
+    
+    &__genre {
+        font-size: 13px;
+        color: map-get($colors, 'gray');
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    &__rating {
+        color: #f1c40f;
+        font-size: 14px;
+    }
+    
+    &__description {
+        font-size: 14px;
+        color: #7f8c8d;
+        margin-bottom: map-get($spacing, 'md');
+        line-height: 1.5;
+    }
+    
+    &__footer {
+        @include flex-between;
+        margin-top: map-get($spacing, 'md');
+    }
+    
+    &__price {
+        font-size: 24px;
+        font-weight: 800;
+        color: map-get($colors, 'primary');
+    }
+    
+    &__old-price {
+        font-size: 14px;
+        color: map-get($colors, 'gray');
+        text-decoration: line-through;
+        margin-right: map-get($spacing, 'xs');
+    }
+    
+    &__btn {
+        background: map-get($colors, 'primary');
+        color: white;
+        border: none;
+        padding: map-get($spacing, 'sm') map-get($spacing, 'lg');
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        @include transition(background);
+        
+        &:hover {
+            background: darken(map-get($colors, 'primary'), 10%);
+        }
+    }
+    
+    // МОДИФИКАТОРЫ
+    &--new &__badge {
+        @include badge(map-get($colors, 'success'));
+    }
+    
+    &--bestseller &__badge {
+        @include badge(map-get($colors, 'danger'));
+    }
+    
+    &--sale &__badge {
+        @include badge(map-get($colors, 'warning'));
+    }
+    
+    &--preorder &__badge {
+        @include badge(map-get($colors, 'secondary'));
+    }
+    
+    &--exclusive &__badge {
+        @include badge(#9b59b6);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    &--sale &__price {
+        color: map-get($colors, 'danger');
+    }
+    
+    // Специфичные платформы
+    &[data-platform="pc"] &__platform {
+        background: map-get($platform-colors, 'pc');
+    }
+    
+    &[data-platform="ps"] &__platform {
+        background: map-get($platform-colors, 'ps');
+    }
+    
+    &[data-platform="xbox"] &__platform {
+        background: map-get($platform-colors, 'xbox');
+    }
+    
+    &[data-platform="switch"] &__platform {
+        background: map-get($platform-colors, 'switch');
+    }
+}
+
+// Дополнительные стили для разных платформ в примере
+.game-card:nth-child(1) .game-card__platform { background: #3498db; } // PC, PS5, XSX
+.game-card:nth-child(2) .game-card__platform { background: #003791; } // PS4
+.game-card:nth-child(3) .game-card__platform { background: #107c10; } // Xbox
+.game-card:nth-child(4) .game-card__platform { background: #e60012; } // Switch
+.game-card:nth-child(5) .game-card__platform { background: #9b59b6; } // Multi
+.game-card:nth-child(6) .game-card__platform { background: #003791; } // PS5
