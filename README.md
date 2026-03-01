@@ -1,1 +1,1 @@
-[text](c:/Users/temir/OneDrive/Documents/4.docx) [text](c:/Users/temir/OneDrive/Documents/5.docx) [text](c:/Users/temir/Downloads/3.docx) [text](c:/Users/temir/Downloads/2.docx) [text](c:/Users/temir/Downloads/1.docx)
+https://github.com/ALW5/frontend-backend-2/blob/main/Отчеты/1.docx
