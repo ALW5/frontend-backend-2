@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStore - Магазин видеоигр</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="header__title">🎮 GameStore</h1>
+            <p class="header__subtitle">Лучшие игры по лучшим ценам</p>
+        </header>
+        
+        <div class="games-grid">
+            <!-- Карточка игры 1 - Новинка -->
+            <div class="game-card game-card--new">
+                <div class="game-card__media">
+                    <img src="https://via.placeholder.com/300x200/9b59b6/ffffff?text=Cyberpunk+2077" alt="Cyberpunk 2077" class="game-card__image">
+                    <span class="game-card__badge">НОВИНКА</span>
+                    <span class="game-card__platform">PC, PS5, XSX</span>
+                </div>
+                <div class="game-card__content">
+                    <h3 class="game-card__title">Cyberpunk 2077</h3>
+                    <div class="game-card__meta">
+                        <span class="game-card__genre">RPG / Action</span>
+                        <span class="game-card__rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="game-card__description">Откройте для себя мир будущего в роли наемника Ви</p>
+                    <div class="game-card__footer">
+                        <span class="game-card__price">3 999 ₽</span>
+                        <button class="game-card__btn">В корзину</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка игры 2 - Хит продаж -->
+            <div class="game-card game-card--bestseller">
+                <div class="game-card__media">
+                    <img src="https://via.placeholder.com/300x200/e74c3c/ffffff?text=The+Witcher+3" alt="The Witcher 3" class="game-card__image">
+                    <span class="game-card__badge">ХИТ ПРОДАЖ</span>
+                    <span class="game-card__platform">PC, PS4, XOne</span>
+                </div>
+                <div class="game-card__content">
+                    <h3 class="game-card__title">The Witcher 3: Wild Hunt</h3>
+                    <div class="game-card__meta">
+                        <span class="game-card__genre">RPG / Open World</span>
+                        <span class="game-card__rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="game-card__description">Станьте профессиональным охотником на чудовищ</p>
+                    <div class="game-card__footer">
+                        <span class="game-card__price">1 999 ₽</span>
+                        <button class="game-card__btn">В корзину</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка игры 3 - Со скидкой -->
+            <div class="game-card game-card--sale">
+                <div class="game-card__media">
+                    <img src="https://via.placeholder.com/300x200/3498db/ffffff?text=Red+Dead+2" alt="Red Dead Redemption 2" class="game-card__image">
+                    <span class="game-card__badge">СКИДКА 30%</span>
+                    <span class="game-card__platform">PC, PS4, XOne</span>
+                </div>
+                <div class="game-card__content">
+                    <h3 class="game-card__title">Red Dead Redemption 2</h3>
+                    <div class="game-card__meta">
+                        <span class="game-card__genre">Adventure / Western</span>
+                        <span class="game-card__rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="game-card__description">Эпическое приключение на Диком Западе</p>
+                    <div class="game-card__footer">
+                        <span class="game-card__old-price">3 499 ₽</span>
+                        <span class="game-card__price">2 449 ₽</span>
+                        <button class="game-card__btn">В корзину</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка игры 4 - Предзаказ -->
+            <div class="game-card game-card--preorder">
+                <div class="game-card__media">
+                    <img src="https://via.placeholder.com/300x200/2ecc71/ffffff?text=GTA+6" alt="GTA 6" class="game-card__image">
+                    <span class="game-card__badge">ПРЕДЗАКАЗ</span>
+                    <span class="game-card__platform">PS5, XSX</span>
+                </div>
+                <div class="game-card__content">
+                    <h3 class="game-card__title">GTA VI</h3>
+                    <div class="game-card__meta">
+                        <span class="game-card__genre">Action / Open World</span>
+                        <span class="game-card__rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="game-card__description">Долгожданное продолжение легендарной серии</p>
+                    <div class="game-card__footer">
+                        <span class="game-card__price">7 999 ₽</span>
+                        <button class="game-card__btn">Предзаказать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка игры 5 - Инди игра -->
+            <div class="game-card">
+                <div class="game-card__media">
+                    <img src="https://via.placeholder.com/300x200/f39c12/ffffff?text=Hollow+Knight" alt="Hollow Knight" class="game-card__image">
+                    <span class="game-card__platform">PC, Switch, PS4</span>
+                </div>
+                <div class="game-card__content">
+                    <h3 class="game-card__title">Hollow Knight</h3>
+                    <div class="game-card__meta">
+                        <span class="game-card__genre">Metroidvania / Indie</span>
+                        <span class="game-card__rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="game-card__description">Загадочное приключение в подземном мире</p>
+                    <div class="game-card__footer">
+                        <span class="game-card__price">699 ₽</span>
+                        <button class="game-card__btn">В корзину</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка игры 6 - Эксклюзив -->
+            <div class="game-card game-card--exclusive">
+                <div class="game-card__media">
+                    <img src="https://via.placeholder.com/300x200/1abc9c/ffffff?text=Spider-Man+2" alt="Spider-Man 2" class="game-card__image">
+                    <span class="game-card__badge">ЭКСКЛЮЗИВ</span>
+                    <span class="game-card__platform">PS5</span>
+                </div>
+                <div class="game-card__content">
+                    <h3 class="game-card__title">Spider-Man 2</h3>
+                    <div class="game-card__meta">
+                        <span class="game-card__genre">Action / Adventure</span>
+                        <span class="game-card__rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="game-card__description">Новое приключение Человека-паука</p>
+                    <div class="game-card__footer">
+                        <span class="game-card__price">4 999 ₽</span>
+                        <button class="game-card__btn">В корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
