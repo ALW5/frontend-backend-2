@@ -1,1 +1,1 @@
-[c:\Users\temir\OneDrive\Documents\4.docx c:\Users\temir\OneDrive\Documents\5.docx](c:/Users/temir/Downloads/1.docx) [c:\Users\temir\OneDrive\Documents\4.docx c:\Users\temir\OneDrive\Documents\5.docx](c:/Users/temir/Downloads/3.docx) [c:\Users\temir\OneDrive\Documents\4.docx c:\Users\temir\OneDrive\Documents\5.docx](c:/Users/temir/Downloads/2.docx)
+[text](c:/Users/temir/OneDrive/Documents/4.docx) [text](c:/Users/temir/OneDrive/Documents/5.docx) [text](c:/Users/temir/Downloads/3.docx) [text](c:/Users/temir/Downloads/2.docx) [text](c:/Users/temir/Downloads/1.docx)
