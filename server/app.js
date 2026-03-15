@@ -1,39 +1,137 @@
 const express = require('express');
 const cors = require('cors');
-const { nanoid } = require('nanoid');
-
-// Подключаем Swagger
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const port = 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Наши игры
-let games = [
-    { id: 1, name: "Cyberpunk 2077", price: 3999, category: "RPG", description: "Откройте для себя мир будущего", stock: 10 },
-    { id: 2, name: "The Witcher 3", price: 1999, category: "RPG", description: "Станьте охотником на чудовищ", stock: 15 },
-    { id: 3, name: "Red Dead Redemption 2", price: 3499, category: "Adventure", description: "Эпическое приключение на Диком Западе", stock: 8 },
-    { id: 4, name: "GTA VI", price: 7999, category: "Action", description: "Долгожданное продолжение легендарной серии", stock: 5 },
-    { id: 5, name: "Hollow Knight", price: 699, category: "Indie", description: "Загадочное приключение в подземном мире", stock: 20 },
-    { id: 6, name: "Spider-Man 2", price: 4999, category: "Action", description: "Новое приключение Человека-паука", stock: 7 }
+let furniture = [
+    { 
+        id: 1, 
+        name: "Диван Комфорт", 
+        price: 45990, 
+        category: "Диваны",
+        description: "Мягкий диван с ортопедическим матрасом",
+        material: "Ткань, дерево",
+        dimensions: "200x90x80 см",
+        color: "Бежевый",
+        stock: 5
+    },
+    { 
+        id: 2, 
+        name: "Кровать-лофт Дрим", 
+        price: 38990, 
+        category: "Кровати",
+        description: "Двухъярусная кровать из массива сосны",
+        material: "Массив сосны",
+        dimensions: "190x90x180 см",
+        color: "Натуральное дерево",
+        stock: 3
+    },
+    { 
+        id: 3, 
+        name: "Стол письменный Бюро", 
+        price: 12990, 
+        category: "Столы",
+        description: "Просторный стол с ящиками",
+        material: "ЛДСП, металл",
+        dimensions: "120x60x75 см",
+        color: "Белый/Дуб",
+        stock: 8
+    },
+    { 
+        id: 4, 
+        name: "Стул офисный Эрго", 
+        price: 8990, 
+        category: "Стулья",
+        description: "Эргономичное кресло с поддержкой спины",
+        material: "Экокожа, пластик",
+        dimensions: "65x65x110 см",
+        color: "Черный",
+        stock: 12
+    },
+    { 
+        id: 5, 
+        name: "Шкаф-купе Гармония", 
+        price: 35990, 
+        category: "Шкафы",
+        description: "Вместительный шкаф с зеркальными дверцами",
+        material: "ЛДСП, зеркало",
+        dimensions: "180x60x220 см",
+        color: "Венге/Дуб",
+        stock: 4
+    },
+    { 
+        id: 6, 
+        name: "Тумба прикроватная Ночка", 
+        price: 4990, 
+        category: "Тумбы",
+        description: "Компактная тумбочка с ящиком",
+        material: "ЛДСП",
+        dimensions: "40x40x50 см",
+        color: "Белый",
+        stock: 15
+    },
+    { 
+        id: 7, 
+        name: "Кресло-качалка Релакс", 
+        price: 15990, 
+        category: "Кресла",
+        description: "Уютное кресло для отдыха",
+        material: "Ротанг, подушка",
+        dimensions: "70x85x100 см",
+        color: "Натуральный",
+        stock: 6
+    },
+    { 
+        id: 8, 
+        name: "Стеллаж Библиотека", 
+        price: 18990, 
+        category: "Стеллажи",
+        description: "Открытый стеллаж для книг",
+        material: "Металл, дерево",
+        dimensions: "150x30x180 см",
+        color: "Черный/Дуб",
+        stock: 7
+    },
+    { 
+        id: 9, 
+        name: "Обеденный стол Трапеза", 
+        price: 21990, 
+        category: "Столы",
+        description: "Стол для большой семьи",
+        material: "Массив дуба",
+        dimensions: "160x80x75 см",
+        color: "Дуб",
+        stock: 5
+    },
+    { 
+        id: 10, 
+        name: "Комод Минималист", 
+        price: 14990, 
+        category: "Комоды",
+        description: "Современный комод с 4 ящиками",
+        material: "ЛДСП",
+        dimensions: "80x40x90 см",
+        color: "Серый",
+        stock: 9
+    }
 ];
 
-// ========== НАСТРОЙКА SWAGGER ==========
 const swaggerOptions = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'GameStore API',
+            title: 'FurnitureStore API',
             version: '1.0.0',
-            description: 'API для управления магазином видеоигр',
+            description: 'API для управления магазином мебели',
             contact: {
-                name: 'GameStore',
+                name: 'FurnitureStore',
                 url: 'http://localhost:3000',
             },
         },
@@ -44,20 +142,17 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ['./app.js'], // путь к файлам с аннотациями
+    apis: ['./app.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
-
-// Подключаем Swagger UI по адресу /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// ========== ОПИСАНИЕ СХЕМЫ ИГРЫ ==========
 /**
  * @swagger
  * components:
  *   schemas:
- *     Game:
+ *     Furniture:
  *       type: object
  *       required:
  *         - name
@@ -65,93 +160,105 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *       properties:
  *         id:
  *           type: integer
- *           description: Автоматически генерируемый ID игры
+ *           description: ID товара
  *         name:
  *           type: string
- *           description: Название игры
+ *           description: Название товара
  *         price:
  *           type: number
- *           description: Цена игры в рублях
+ *           description: Цена в рублях
  *         category:
  *           type: string
- *           description: Категория игры (RPG, Action и т.д.)
+ *           description: Категория
  *         description:
  *           type: string
- *           description: Описание игры
+ *           description: Описание
+ *         material:
+ *           type: string
+ *           description: Материал
+ *         dimensions:
+ *           type: string
+ *           description: Габариты
+ *         color:
+ *           type: string
+ *           description: Цвет
  *         stock:
  *           type: integer
  *           description: Количество на складе
  *       example:
  *         id: 1
- *         name: "Cyberpunk 2077"
- *         price: 3999
- *         category: "RPG"
- *         description: "Откройте для себя мир будущего"
- *         stock: 10
+ *         name: "Диван Комфорт"
+ *         price: 45990
+ *         category: "Диваны"
+ *         description: "Мягкий диван с ортопедическим матрасом"
+ *         material: "Ткань, дерево"
+ *         dimensions: "200x90x80 см"
+ *         color: "Бежевый"
+ *         stock: 5
  */
 
-// ========== МАРШРУТЫ С ДОКУМЕНТАЦИЕЙ ==========
+// ========== МАРШРУТЫ ==========
 
 /**
  * @swagger
- * /games:
+ * /furniture:
  *   get:
- *     summary: Получить список всех игр
- *     tags: [Games]
+ *     summary: Получить список всей мебели
+ *     tags: [Furniture]
  *     responses:
  *       200:
- *         description: Список всех игр
+ *         description: Список мебели
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Game'
+ *                 $ref: '#/components/schemas/Furniture'
  */
-app.get('/games', (req, res) => {
-    res.json(games);
+app.get('/furniture', (req, res) => {
+    res.json(furniture);
 });
 
 /**
  * @swagger
- * /games/{id}:
+ * /furniture/{id}:
  *   get:
- *     summary: Получить игру по ID
- *     tags: [Games]
+ *     summary: Получить товар по ID
+ *     tags: [Furniture]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID игры
+ *         description: ID товара
  *     responses:
  *       200:
- *         description: Информация об игре
+ *         description: Информация о товаре
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Game'
+ *               $ref: '#/components/schemas/Furniture'
  *       404:
- *         description: Игра не найдена
+ *         description: Товар не найден
  */
-app.get('/games/:id', (req, res) => {
+app.get('/furniture/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const game = games.find(g => g.id === id);
+    const item = furniture.find(f => f.id === id);
     
-    if (!game) {
-        return res.status(404).json({ error: "Игра не найдена" });
+    if (!item) {
+        return res.status(404).json({ error: "Товар не найден" });
     }
     
-    res.json(game);
+    res.json(item);
 });
 
 /**
  * @swagger
- * /games:
+ * /furniture:
  *   post:
- *     summary: Добавить новую игру
- *     tags: [Games]
+ *     summary: Добавить новый товар
+ *     tags: [Furniture]
  *     requestBody:
  *       required: true
  *       content:
@@ -170,23 +277,29 @@ app.get('/games/:id', (req, res) => {
  *                 type: string
  *               description:
  *                 type: string
+ *               material:
+ *                 type: string
+ *               dimensions:
+ *                 type: string
+ *               color:
+ *                 type: string
  *               stock:
  *                 type: integer
  *     responses:
  *       201:
- *         description: Игра успешно добавлена
+ *         description: Товар успешно добавлен
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Game'
+ *               $ref: '#/components/schemas/Furniture'
  *       400:
  *         description: Ошибка в запросе
  */
-app.post('/games', (req, res) => {
+app.post('/furniture', (req, res) => {
     console.log("Получен POST запрос");
     console.log("Тело запроса:", req.body);
     
-    const { name, price, category, description, stock } = req.body;
+    const { name, price, category, description, material, dimensions, color, stock } = req.body;
     
     if (!req.body || Object.keys(req.body).length === 0) {
         return res.status(400).json({ error: "Тело запроса пустое" });
@@ -200,33 +313,36 @@ app.post('/games', (req, res) => {
         return res.status(400).json({ error: "Поле 'price' обязательно" });
     }
     
-    const newGame = {
-        id: games.length + 1,
+    const newItem = {
+        id: furniture.length + 1,
         name: name,
         price: Number(price),
         category: category || "Другое",
         description: description || "",
+        material: material || "Не указан",
+        dimensions: dimensions || "Не указаны",
+        color: color || "Не указан",
         stock: stock !== undefined ? Number(stock) : 0
     };
     
-    games.push(newGame);
-    console.log("Игра добавлена:", newGame);
-    res.status(201).json(newGame);
+    furniture.push(newItem);
+    console.log("Товар добавлен:", newItem);
+    res.status(201).json(newItem);
 });
 
 /**
  * @swagger
- * /games/{id}:
+ * /furniture/{id}:
  *   patch:
- *     summary: Обновить информацию об игре
- *     tags: [Games]
+ *     summary: Обновить информацию о товаре
+ *     tags: [Furniture]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID игры
+ *         description: ID товара
  *     requestBody:
  *       required: true
  *       content:
@@ -242,76 +358,85 @@ app.post('/games', (req, res) => {
  *                 type: string
  *               description:
  *                 type: string
+ *               material:
+ *                 type: string
+ *               dimensions:
+ *                 type: string
+ *               color:
+ *                 type: string
  *               stock:
  *                 type: integer
  *     responses:
  *       200:
- *         description: Игра обновлена
+ *         description: Товар обновлен
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Game'
+ *               $ref: '#/components/schemas/Furniture'
  *       404:
- *         description: Игра не найдена
+ *         description: Товар не найден
  */
-app.patch('/games/:id', (req, res) => {
+app.patch('/furniture/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const game = games.find(g => g.id === id);
+    const item = furniture.find(f => f.id === id);
     
-    if (!game) {
-        return res.status(404).json({ error: "Игра не найдена" });
+    if (!item) {
+        return res.status(404).json({ error: "Товар не найден" });
     }
     
-    const { name, price, category, description, stock } = req.body;
+    const { name, price, category, description, material, dimensions, color, stock } = req.body;
     
-    if (name) game.name = name;
-    if (price) game.price = Number(price);
-    if (category) game.category = category;
-    if (description) game.description = description;
-    if (stock !== undefined) game.stock = Number(stock);
+    if (name) item.name = name;
+    if (price) item.price = Number(price);
+    if (category) item.category = category;
+    if (description) item.description = description;
+    if (material) item.material = material;
+    if (dimensions) item.dimensions = dimensions;
+    if (color) item.color = color;
+    if (stock !== undefined) item.stock = Number(stock);
     
-    res.json(game);
+    res.json(item);
 });
 
 /**
  * @swagger
- * /games/{id}:
+ * /furniture/{id}:
  *   delete:
- *     summary: Удалить игру
- *     tags: [Games]
+ *     summary: Удалить товар
+ *     tags: [Furniture]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID игры
+ *         description: ID товара
  *     responses:
  *       204:
- *         description: Игра успешно удалена (нет тела ответа)
+ *         description: Товар успешно удален
  *       404:
- *         description: Игра не найдена
+ *         description: Товар не найден
  */
-app.delete('/games/:id', (req, res) => {
+app.delete('/furniture/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const gameIndex = games.findIndex(g => g.id === id);
+    const itemIndex = furniture.findIndex(f => f.id === id);
     
-    if (gameIndex === -1) {
-        return res.status(404).json({ error: "Игра не найдена" });
+    if (itemIndex === -1) {
+        return res.status(404).json({ error: "Товар не найден" });
     }
     
-    games.splice(gameIndex, 1);
+    furniture.splice(itemIndex, 1);
     res.status(204).send();
 });
 
 // Запуск сервера
 app.listen(port, () => {
-    console.log(`🕹️ Сервер игрового магазина запущен на http://localhost:${port}`);
-    console.log(`📚 Документация Swagger доступна на http://localhost:${port}/api-docs`);
+    console.log(`🛋️ Сервер мебельного магазина запущен на http://localhost:${port}`);
+    console.log(`📚 Документация Swagger: http://localhost:${port}/api-docs`);
     console.log(`📦 Доступные маршруты:`);
-    console.log(`   GET    /games         - список всех игр`);
-    console.log(`   GET    /games/:id     - игра по ID`);
-    console.log(`   POST   /games         - добавить игру`);
-    console.log(`   PATCH  /games/:id     - обновить игру`);
-    console.log(`   DELETE /games/:id     - удалить игру`);
+    console.log(`   GET    /furniture         - список всей мебели`);
+    console.log(`   GET    /furniture/:id     - товар по ID`);
+    console.log(`   POST   /furniture         - добавить товар`);
+    console.log(`   PATCH  /furniture/:id     - обновить товар`);
+    console.log(`   DELETE /furniture/:id     - удалить товар`);
 });

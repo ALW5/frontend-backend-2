@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import GameCard from './components/GameCard';
+import FurnitureCard from './components/FurnitureCard';
 import './App.css';
 
 function App() {
-  const [games, setGames] = useState([]);
+  const [furniture, setFurniture] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newGame, setNewGame] = useState({
+  const [newItem, setNewItem] = useState({
     name: '',
     price: '',
     category: '',
     description: '',
+    material: '',
+    dimensions: '',
+    color: '',
     stock: ''
   });
 
-  // Загружаем игры с сервера при запуске
   useEffect(() => {
-    fetchGames();
+    fetchFurniture();
   }, []);
 
-  const fetchGames = async () => {
+  const fetchFurniture = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/games');
-      setGames(response.data);
+      const response = await axios.get('http://localhost:3000/furniture');
+      setFurniture(response.data);
       setError(null);
     } catch (err) {
-      setError('Ошибка загрузки игр');
+      setError('Ошибка загрузки товаров');
       console.error(err);
     } finally {
       setLoading(false);
@@ -36,7 +38,7 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewGame(prev => ({
+    setNewItem(prev => ({
       ...prev,
       [name]: value
     }));
@@ -45,34 +47,39 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/games', {
-        name: newGame.name,
-        price: Number(newGame.price),
-        category: newGame.category,
-        description: newGame.description,
-        stock: Number(newGame.stock)
+      const response = await axios.post('http://localhost:3000/furniture', {
+        name: newItem.name,
+        price: Number(newItem.price),
+        category: newItem.category,
+        description: newItem.description,
+        material: newItem.material,
+        dimensions: newItem.dimensions,
+        color: newItem.color,
+        stock: Number(newItem.stock)
       });
-      setGames(prev => [...prev, response.data]);
-      // Очищаем форму
-      setNewGame({
+      setFurniture(prev => [...prev, response.data]);
+      setNewItem({
         name: '',
         price: '',
         category: '',
         description: '',
+        material: '',
+        dimensions: '',
+        color: '',
         stock: ''
       });
     } catch (err) {
-      alert('Ошибка при добавлении игры');
+      alert('Ошибка при добавлении товара');
       console.error(err);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Удалить игру?')) return;
+    if (!window.confirm('Удалить товар?')) return;
     
     try {
-      await axios.delete(`http://localhost:3000/games/${id}`);
-      setGames(prev => prev.filter(game => game.id !== id));
+      await axios.delete(`http://localhost:3000/furniture/${id}`);
+      setFurniture(prev => prev.filter(item => item.id !== id));
     } catch (err) {
       alert('Ошибка при удалении');
       console.error(err);
@@ -82,20 +89,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🎮 GameStore</h1>
-        <p>Магазин видеоигр</p>
+        <h1>🛋️ FurnitureStore</h1>
+        <p>Мебель для уютного дома</p>
       </header>
 
       <main>
-        {/* Форма добавления игры */}
-        <section className="add-game-section">
-          <h2>Добавить новую игру</h2>
-          <form onSubmit={handleSubmit} className="add-game-form">
+        <section className="add-item-section">
+          <h2>Добавить новый товар</h2>
+          <form onSubmit={handleSubmit} className="add-item-form">
             <input
               type="text"
               name="name"
-              placeholder="Название игры"
-              value={newGame.name}
+              placeholder="Название"
+              value={newItem.name}
               onChange={handleInputChange}
               required
             />
@@ -103,7 +109,7 @@ function App() {
               type="number"
               name="price"
               placeholder="Цена"
-              value={newGame.price}
+              value={newItem.price}
               onChange={handleInputChange}
               required
             />
@@ -111,39 +117,59 @@ function App() {
               type="text"
               name="category"
               placeholder="Категория"
-              value={newGame.category}
+              value={newItem.category}
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="material"
+              placeholder="Материал"
+              value={newItem.material}
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="dimensions"
+              placeholder="Размеры (см)"
+              value={newItem.dimensions}
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="color"
+              placeholder="Цвет"
+              value={newItem.color}
               onChange={handleInputChange}
             />
             <input
               type="text"
               name="description"
               placeholder="Описание"
-              value={newGame.description}
+              value={newItem.description}
               onChange={handleInputChange}
             />
             <input
               type="number"
               name="stock"
-              placeholder="Количество на складе"
-              value={newGame.stock}
+              placeholder="Количество"
+              value={newItem.stock}
               onChange={handleInputChange}
             />
-            <button type="submit">Добавить игру</button>
+            <button type="submit">➕ Добавить товар</button>
           </form>
         </section>
 
-        {/* Список игр */}
-        <section className="games-section">
-          <h2>Наши игры</h2>
+        <section className="items-section">
+          <h2>Наш каталог</h2>
           
           {loading && <div className="loading">Загрузка...</div>}
           {error && <div className="error">{error}</div>}
           
-          <div className="games-grid">
-            {games.map(game => (
-              <GameCard 
-                key={game.id} 
-                game={game} 
+          <div className="items-grid">
+            {furniture.map(item => (
+              <FurnitureCard 
+                key={item.id} 
+                item={item} 
                 onDelete={handleDelete}
               />
             ))}
