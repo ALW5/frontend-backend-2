@@ -6,9 +6,12 @@ const FurnitureCard = ({ item, onDelete }) => {
     <div className={`furniture-card ${item.stock === 0 ? 'out-of-stock' : ''}`}>
       <div className="furniture-card__media">
         <img 
-          src={`https://via.placeholder.com/300x200/${getColorByCategory(item.category)}/ffffff?text=${item.name}`} 
+          src={item.imageUrl || `https://via.placeholder.com/300x200/${getColorByCategory(item.category)}/ffffff?text=${item.name}`} 
           alt={item.name}
           className="furniture-card__image"
+          onError={(e) => {
+            e.target.src = `https://via.placeholder.com/300x200/${getColorByCategory(item.category)}/ffffff?text=${item.name}`;
+          }}
         />
         {item.stock < 3 && item.stock > 0 && (
           <span className="furniture-card__badge furniture-card__badge--warning">Осталось мало</span>

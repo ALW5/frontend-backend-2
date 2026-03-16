@@ -20,7 +20,8 @@ let furniture = [
         material: "Ткань, дерево",
         dimensions: "200x90x80 см",
         color: "Бежевый",
-        stock: 5
+        stock: 5,
+        imageUrl: "https://main-cdn.sbermegamarket.ru/big2/hlr-system/514/799/346/491/840/100067456008b1.jpg"
     },
     { 
         id: 2, 
@@ -31,7 +32,8 @@ let furniture = [
         material: "Массив сосны",
         dimensions: "190x90x180 см",
         color: "Натуральное дерево",
-        stock: 3
+        stock: 3,
+        imageUrl: "https://www.mebhome.ru/imgup/617821_164865976778805a221a988e79ef3f42d7c5bfd418.jpg"
     },
     { 
         id: 3, 
@@ -42,7 +44,8 @@ let furniture = [
         material: "ЛДСП, металл",
         dimensions: "120x60x75 см",
         color: "Белый/Дуб",
-        stock: 8
+        stock: 8,
+        imageUrl: "https://static.baza.farpost.ru/v/1737643786439_bulletin"
     },
     { 
         id: 4, 
@@ -53,7 +56,8 @@ let furniture = [
         material: "Экокожа, пластик",
         dimensions: "65x65x110 см",
         color: "Черный",
-        stock: 12
+        stock: 12,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=20844dad857084267a03d685a99cfe3677fe733e-5746458-images-thumbs&n=13"
     },
     { 
         id: 5, 
@@ -64,7 +68,8 @@ let furniture = [
         material: "ЛДСП, зеркало",
         dimensions: "180x60x220 см",
         color: "Венге/Дуб",
-        stock: 4
+        stock: 4,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=e8486236f46d6036e518b8cc5240bb2077d09a9e-12475925-images-thumbs&n=13"
     },
     { 
         id: 6, 
@@ -75,7 +80,8 @@ let furniture = [
         material: "ЛДСП",
         dimensions: "40x40x50 см",
         color: "Белый",
-        stock: 15
+        stock: 15,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=c5308ab551c4db4db16bcd807d8738634b58d20e-5233448-images-thumbs&n=13"
     },
     { 
         id: 7, 
@@ -86,7 +92,8 @@ let furniture = [
         material: "Ротанг, подушка",
         dimensions: "70x85x100 см",
         color: "Натуральный",
-        stock: 6
+        stock: 6,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=4ccc4c95164c841366a1af6ab883b5b841c20132-4900962-images-thumbs&n=13"
     },
     { 
         id: 8, 
@@ -97,7 +104,8 @@ let furniture = [
         material: "Металл, дерево",
         dimensions: "150x30x180 см",
         color: "Черный/Дуб",
-        stock: 7
+        stock: 7,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=d50b3347b4326ae8c0c485f1989d925003caee10-4499935-images-thumbs&n=13"
     },
     { 
         id: 9, 
@@ -108,7 +116,8 @@ let furniture = [
         material: "Массив дуба",
         dimensions: "160x80x75 см",
         color: "Дуб",
-        stock: 5
+        stock: 5,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=103d9a3bfddae5524a014f99b2a7e307452d3597-5427576-images-thumbs&n=13"
     },
     { 
         id: 10, 
@@ -119,7 +128,8 @@ let furniture = [
         material: "ЛДСП",
         dimensions: "80x40x90 см",
         color: "Серый",
-        stock: 9
+        stock: 9,
+        imageUrl: "https://avatars.mds.yandex.net/i?id=c6dbf7689be9cf104e678ab261f62afdf65298ac-5031050-images-thumbs&n=13"
     }
 ];
 
@@ -148,6 +158,7 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// ========== ОПИСАНИЕ СХЕМЫ МЕБЕЛИ ==========
 /**
  * @swagger
  * components:
@@ -185,6 +196,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *         stock:
  *           type: integer
  *           description: Количество на складе
+ *         imageUrl:
+ *           type: string
+ *           description: Ссылка на фотографию товара
  *       example:
  *         id: 1
  *         name: "Диван Комфорт"
@@ -195,6 +209,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *         dimensions: "200x90x80 см"
  *         color: "Бежевый"
  *         stock: 5
+ *         imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400"
  */
 
 // ========== МАРШРУТЫ ==========
@@ -285,6 +300,8 @@ app.get('/furniture/:id', (req, res) => {
  *                 type: string
  *               stock:
  *                 type: integer
+ *               imageUrl:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Товар успешно добавлен
@@ -299,7 +316,7 @@ app.post('/furniture', (req, res) => {
     console.log("Получен POST запрос");
     console.log("Тело запроса:", req.body);
     
-    const { name, price, category, description, material, dimensions, color, stock } = req.body;
+    const { name, price, category, description, material, dimensions, color, stock, imageUrl } = req.body;
     
     if (!req.body || Object.keys(req.body).length === 0) {
         return res.status(400).json({ error: "Тело запроса пустое" });
@@ -322,7 +339,8 @@ app.post('/furniture', (req, res) => {
         material: material || "Не указан",
         dimensions: dimensions || "Не указаны",
         color: color || "Не указан",
-        stock: stock !== undefined ? Number(stock) : 0
+        stock: stock !== undefined ? Number(stock) : 0,
+        imageUrl: imageUrl || `https://via.placeholder.com/300x200/8B4513/ffffff?text=${name}`
     };
     
     furniture.push(newItem);
@@ -366,6 +384,8 @@ app.post('/furniture', (req, res) => {
  *                 type: string
  *               stock:
  *                 type: integer
+ *               imageUrl:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Товар обновлен
@@ -384,7 +404,7 @@ app.patch('/furniture/:id', (req, res) => {
         return res.status(404).json({ error: "Товар не найден" });
     }
     
-    const { name, price, category, description, material, dimensions, color, stock } = req.body;
+    const { name, price, category, description, material, dimensions, color, stock, imageUrl } = req.body;
     
     if (name) item.name = name;
     if (price) item.price = Number(price);
@@ -394,6 +414,7 @@ app.patch('/furniture/:id', (req, res) => {
     if (dimensions) item.dimensions = dimensions;
     if (color) item.color = color;
     if (stock !== undefined) item.stock = Number(stock);
+    if (imageUrl) item.imageUrl = imageUrl;
     
     res.json(item);
 });
@@ -429,7 +450,6 @@ app.delete('/furniture/:id', (req, res) => {
     res.status(204).send();
 });
 
-// Запуск сервера
 app.listen(port, () => {
     console.log(`🛋️ Сервер мебельного магазина запущен на http://localhost:${port}`);
     console.log(`📚 Документация Swagger: http://localhost:${port}/api-docs`);
